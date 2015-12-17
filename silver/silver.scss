@@ -1,0 +1,39 @@
+$initWidth:30px;/*initalize the silver diamete  r*/
+$silverWidth:500px;/*the silver's max diameter*/
+$silverDuration:5s;
+$silverWeight:5px;
+@keyframes sploosh {
+  0% {
+    width:$initWidth;
+    height:$initWidth;
+    left:-$initWidth/2;
+    top:-$initWidth/2;
+    border:$silverWeight solid rgba(0,0,0,0.05)
+
+  }
+  50%{
+    border:$silverWeight solid rgba(0,0,0,0.8)
+  }
+  100% {
+    width:100%;
+    height:100%;
+    border:2px solid rgba(0,0,0,0);
+    left:-50%;
+    top:-50%;
+  }
+}
+.silver{
+  position: relative;
+  height:$silverWidth;
+  width:$silverWidth;
+  left:50px;
+  top:100px;
+  .dot{
+    transform:translate($silverWidth/2,$silverWidth/2);
+    border-radius: 100%;
+    position: absolute;
+    width:2px;
+    height:2px;
+    animation: sploosh $silverDuration linear;//这里控制动画时间
+  }
+}
