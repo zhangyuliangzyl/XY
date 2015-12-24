@@ -31,24 +31,26 @@
     }
 /*
  *功能：处理超价钱字符串，没超过万元精确到小数点后两位，超过万元返回“万”为单位的浮点数，精确到小数点后两位即百位
+ *参数：原始价钱（字符串）
+		货币单位（万）节点
  *输入：字符串型价钱 单位节点
- *输出：返回处理后的字符串型价钱 及单位是否显示
+ *输出：返回处理后的字符串型价钱 及单位是否显示（NG除外）
  *时间：2015-11-25
  */
 	function formatPrice(priceStr,postfixNode){
-    var divideIndex=priceStr.indexOf(".");
+    var divideIndex=p
+	riceStr.indexOf(".");
     if(divideIndex<0){
         priceStr=priceStr+".00";
         divideIndex=priceStr.indexOf(".")
     }
-    var changePrice=priceStr.substr(divideIndex+1,priceStr.length);//零钱部分
-    var intPrice=priceStr.substr(0,divideIndex);//整数部分
+    var changePrice=priceStr.substr(divideIndex+1,priceStr.length);
+    var intPrice=priceStr.substr(0,divideIndex);
     if(intPrice.length>=5){
         changePrice=intPrice.substr(intPrice.length-4,intPrice.length);
         intPrice=intPrice.substr(0,intPrice.length-4);
         var priceOverThousands=intPrice+"."+changePrice;
         divideIndex=priceOverThousands.indexOf(".");
-        /*��������*/
         priceOverThousands=parseFloat(priceOverThousands).toFixed(2);
         postfixNode.style.display="inline";
         return priceOverThousands.toString();
@@ -66,10 +68,43 @@
         return (intPrice+changePrice)
     }
 }
+function ngFormatPrice(priceStr){
+    var divideIndex=priceStr.indexOf(".");
+    if(divideIndex<0){
+        priceStr=priceStr+".00";
+        divideIndex=priceStr.indexOf(".")
+    }
+    var changePrice=priceStr.substr(divideIndex+1,priceStr.length);
+    var intPrice=priceStr.substr(0,divideIndex);
+    if(intPrice.length>=5){
+        changePrice=intPrice.substr(intPrice.length-4,intPrice.length);
+        intPrice=intPrice.substr(0,intPrice.length-4);
+        var priceOverThousands=intPrice+"."+changePrice;
+        divideIndex=priceOverThousands.indexOf(".");
+        priceOverThousands=parseFloat(priceOverThousands).toFixed(2);
+        return priceOverThousands.toString();
+    }else{
+        if(changePrice.length==1){
+            changePrice+="0";
+        }
+        if(changePrice.length==0){
+            changePrice+="00";
+        }
+        if(changePrice.length>2){
+            changePrice=changePrice.substr(0,2);
+        }
+        changePrice="."+changePrice;
+        return (intPrice+changePrice)
+    }
+}
 /*
- *功能：将价钱分为整数和零钱两部分插入整数节点和零钱节点 精确到两位小数
+ *功能：将价钱分为整数和零钱两部分插入整数节点和零钱节点 精确到两位小数,(ng返回处理后的对象)
  *输入：原始价钱 整数节点 零钱节点
  *输出：插入节点的值为字符串类型
+ (ng对象{
+	 intPrice:,
+	 changePrice
+ })
  *时间：2015-11-26
  */
 function dividePrice(sourcePrice,intPriceNode,changePriceNode){
@@ -89,6 +124,25 @@ function dividePrice(sourcePrice,intPriceNode,changePriceNode){
        intPriceNode.innerHTML = intPrice;
        changePriceNode.innerHTML = changePrice;
    }
+}
+function ngDividePrice(sourcePrice,intPriceModel,changePriceModel){
+    var priceSrc=parseFloat(sourcePrice).toFixed(2);
+    var intPrice=parseInt(sourcePrice).toString();
+    var changePrice="."+(priceSrc*100)%(intPrice*100);
+    if(changePrice.length==1){
+        changePrice="."+"00";
+    }
+    if(changePrice.length==2){
+        changePrice=changePrice+"0";
+    }
+    try {
+        return{
+            'intPrice':intPrice,
+            'changePrice':changePrice
+        }
+    }catch(e) {
+        alert("尝试ngDividePrice失败！")
+    }
 }
 /*是否PC端
 *返回 true:是PC端，false:不是PC端
@@ -137,12 +191,16 @@ function isOnScreen(Node){
     bounds.bottom = bounds.top + Node.outerHeight();
     return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
 }
+
 /*
 * load the lazy image
 * the img must save the rrue url in the attribute "data-original"
+* notice:do not add the 'lazy' class to div and img node both.
 * */
-function lazyloadImg(imagesSelector,isloadedFlag){
+var isloadedFlag=[];
+function lazyloadImg(imagesSelector){
     var imgList=$(imagesSelector);
+
     for(var i=0;i<imgList.length;i++){
         var itemImg=$(imgList[i]);
         if(isOnScreen(itemImg)&&!isloadedFlag[i]&&itemImg.prop("tagName").toLowerCase()=="img"){
