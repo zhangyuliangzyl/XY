@@ -1,0 +1,50 @@
+/*initalize the silver diameter*/
+/*the silver's max diameter*/
+@keyframes sploosh {
+    0% {
+        width: 30px;
+        height: 30px;
+        left: -15px;
+        top: -15px;
+        border: 2px solid rgba(0, 0, 0, 0.05); }
+    50% {
+        border: 2px solid rgba(0, 0, 0, 0.8); }
+    100% {
+        width: 100%;
+        height: 100%;
+        border: 2px solid transparent;
+        left: -50%;
+        top: -50%; } }
+@-webkit-keyframes sploosh {
+    0% {
+        width: 30px;
+        height: 30px;
+        left: -15px;
+        top: -15px;
+        border: 2px solid rgba(0, 0, 0, 0.05); }
+    50% {
+        border: 2px solid rgba(0, 0, 0, 0.8); }
+    100% {
+        width: 200px;
+        height: 200px;
+        border: 2px solid transparent;
+        left: 100px;
+        top: 100px; } }
+.silver {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    left: 120px;
+    top: 100px; }
+.silver .dot {
+    border: 1px solid #fff;
+    transform: translate(100px, 100px);
+    -webkit-transform: translate(100px, 100px);
+    border-radius: 100%;
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    animation: sploosh 5s linear;
+    -webkit-animation: sploosh 5s linear; }
+
+/*# sourceMappingURL=silver.css.map */

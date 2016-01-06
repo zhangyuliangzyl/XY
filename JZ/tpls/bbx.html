@@ -1,0 +1,93 @@
+<div class="container">
+    <header>
+        <div class="top_img">
+            <img src="img/view_toutu.png">
+        </div>
+        <div class="active_progress">
+            <img src="img/view_guize.png">
+        </div>
+        <div class="active_rule">
+            <img src="img/bt_guize.png">
+        </div>
+    </header>
+    <div class="content">
+        <div class="section_title">
+            <div class="title_box">
+                <div class="title_icon"><img src="img/ic_1.png"></div>
+                <p>
+                    请选择大礼包
+                </p>
+
+                <div class="title_icon"><img src="img/ic_1.png"></div>
+            </div>
+        </div>
+        <div class="goods_section">
+            <div class="goods_list">
+                <ul>
+                    <li ng-repeat="good in goods">
+                        <div class="goods_img">
+                            <img lazy-src="{{good.goods_image}}">
+                          <!--  <img ng-src="{{good.goods_image}}" />-->
+                        </div>
+                        <div class="goods_info">
+                            <div class="goods_title">
+                               <!-- <p class="goods_name" style="display: none" ng-bind="">
+                                      {{good.short_name}}
+                                </p>-->
+                                <p class="goods_name_box">
+                                    <span class="goods_num">{{good.goods_num}}</span>
+                                    <span class="goods_name_txt">{{good.goods_namt_txt}}</span>
+                                </p>
+                            </div>
+                            <div class="goods_txt">
+                                <p>没抓抓内含居家好件48件领取次数不限及司法收到货收到货叫刚开始内含居家好件48件，领取次数不限</p>
+                            </div>
+                            <div class="goods_money clearfix">
+                                <div class="goods_price">
+                                    <label>¥</label>
+                                         <span class="int_price">
+                                             {{good.intPrice}}
+                                         </span>
+                                         <span class="change_price">
+                                             {{good.changePrice}}
+                                         </span>
+                                    <span ng-show="{{good.goods_lowest_price}}>=10000" class="wan">万</span>
+                                </div>
+                                <div class="pay_btn">
+                                    <p>立即支付</p>
+                                </div>
+                            </div>
+                            <div class="find_more clearfix">
+                                <p>查看百宝箱内的礼物</p>"
+                                <div class="find_more_icon">
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="section_title title2" id="rule_txt">
+            <div class="title_box">
+                <div class="title_icon"><img src="img/ic_1.png"></div>
+                <p>
+                    活动说明
+                </p>
+
+                <div class="title_icon"><img src="img/ic_1.png"></div>
+            </div>
+        </div>
+        <div class="rule_section">
+            <article>
+                <ul>
+                    <li>1.送礼用户可在朋友圈或微信内自己领取一份礼物;</li>
+                    <li>2.领取成功后凭兑换码至心意盒子兑换(如采用抢的方式：增加这一条);</li>
+                    <li>3.每个百宝箱均有领取次数限制，最早去兑换的才能拿到礼物，手快有，手慢无，领取后一定要最快速度去兑换哦~;</li>
+                    <li>4.无论收到多少个百宝箱，每个注册用户限领一份;</li>
+                    <li>5.活动截止时间：2015.11.30 23:59，截止时间后，所有百宝箱全部失效，未领取完成的百宝箱商品金额无法退款！</li>
+                </ul>
+            </article>
+        </div>
+    </div>
+</div>
